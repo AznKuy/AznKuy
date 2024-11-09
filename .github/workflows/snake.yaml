@@ -1,0 +1,31 @@
+name: Snake Game
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *'  # Menjalankan setiap hari pada pukul 00:00 UTC
+
+jobs:
+  update-snake:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Generate snake animation
+      uses: Platane/snk@master
+      with:
+        github_user: 'AznKuy'  # Ganti dengan username GitHub kamu
+        width: 1000
+        height: 600
+
+    - name: Commit and push snake.svg
+      uses: EndBug/add-and-commit@v9
+      with:
+        author_name: 'GitHub Actions'
+        author_email: 'github-actions@users.noreply.github.com'
+        message: 'Update snake animation'
+        add: 'output/snake.svg'
